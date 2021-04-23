@@ -1,8 +1,8 @@
 '''
 
-BINARY TREE DISPLAY
+NON-BINARY TREE DISPLAY
 
-Description:    A utility help visualize binary trees by using ASCII text.
+Description:    A utility help visualize non-binary trees by using ASCII text.
 
 Author:         Thanh Trung Nguyen
                 thanh.it1995 (at) gmail.com
@@ -12,15 +12,15 @@ License:        3-Clause BSD License
 '''
 
 
-from .parsingnode import ParsingNode
 from .valueutil import ValueUtil
 from .matrixbuffer import MatrixBuffer
-from .displayparser import DisplayParser
+from .parsingnode import ParsingNode
+from .nonbintreeparser import NonBinTreeParser
 
 
 #
 #
-class BinTreeDisplay:
+class NonBinTreeDisplay:
     '''
     Binary tree display. A utility help visualize binary trees by using ASCII text.
     '''
@@ -33,10 +33,9 @@ class BinTreeDisplay:
     #
     def __init__(self):
         self._vutil = ValueUtil()
-        self._parser = DisplayParser(self._vutil)
+        self._parser = NonBinTreeParser(self._vutil)
         self._buffer = None
-        self._margin_left = 0
-        self.config(struct_node=('key', 'left', 'right'))
+        self.config(line_char='-', margin_left=0)
 
     #
     #
@@ -84,41 +83,37 @@ class BinTreeDisplay:
 
     #
     #
-    def config(self, struct_node: tuple = None, line_char: str = '-', line_brsp: int = 1, margin_left: int = 0, float_pre: int = 2):
+    def config(self, **kwargs):
         '''
         Configures settings.
         Args:
-            struct_node: Structure information of input node. This is a tuple which comprises 3 elemenets:
-                (name_key, name_left_child, name_right_child)
+            struct_node: Tuple(name_key, name_lst_children) indicating structure information of input node.
+            space_branch_neighbor: Space between 2 branch neighbors.
             line_char: Display character for the horizontal line connecting left-right branches.
-            line_brsp: Branch spacing value for the horizontal line connecting left-right branches.
             margin_left: Left margin of output string result.
             float_pre: Maximum precision of floating-point numbers when displays.
         '''
-        if struct_node is not None:
-            if type(struct_node) is not tuple or len(struct_node) != 3:
-                raise ValueError('Invalid argument: struct_node must be a tuple of 3 elements')
+        for arg, argval in kwargs.items():
+            if arg == 'struct_node':
+                self._parser.config(struct_node=argval)
 
-        if type(margin_left) is not int or margin_left < 0:
-            raise ValueError('Invalid argument: margin_left must be a non-negative integer')
+            elif arg == 'space_branch_neighbor':
+                self._parser.config(space_branch_neighbor=argval)
 
-        if type(line_char) is not str or len(line_char) != 1:
-            raise ValueError('Invalid argument: line_char must be a string of length 1')
+            elif arg == 'line_char':
+                if type(argval) is not str or len(argval) != 1:
+                    raise ValueError('Invalid argument: line_char must be a string of length 1')
 
-        if type(line_brsp) is not int or line_brsp < 1:
-            raise ValueError('Invalid argument: line_brsp must be a positive integer')
+                self._line_char = argval
 
-        if type(float_pre) is not int or float_pre < 0:
-            raise ValueError('Invalid argument: float_pre must be a non-negative integer')
+            elif arg == 'margin_left':
+                if type(argval) is not int or argval < 0:
+                    raise ValueError('Invalid argument: margin_left must be a non-negative integer')
 
-        # Finish arguments validation
+                self._margin_left = argval
 
-        if struct_node is not None:
-            self._parser.config_struct_input_node(struct_node[0], struct_node[1], struct_node[2])
-
-        self._parser.config_line(line_char, line_brsp)
-        self._vutil.set_float_precision(float_pre)
-        self._margin_left = margin_left
+            elif arg == 'float_pre':
+                self._vutil.set_float_precision(argval)
 
     #
     #
@@ -175,4 +170,4 @@ class BinTreeDisplay:
         if direction == 'left':
             margin_a += len(child_key) - 1
 
-        self._buffer.fill_line(self._parser.line_char, y, margin_a, margin_b)
+        self._buffer.fill_line(self._line_char, y, margin_a, margin_b)

@@ -1,5 +1,5 @@
-from .bintreedisplay import BinTreeDisplay
+from .nonbintreedisplay import NonBinTreeDisplay
 
 __all__ = [
-    'BinTreeDisplay'
+    'NonBinTreeDisplay'
 ]
