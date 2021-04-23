@@ -28,7 +28,7 @@ class MatrixBuffer:
 
     #
     #
-    def fill(self, posx: int, posy: int, value: str):
+    def fill_str(self, posx: int, posy: int, value: str):
         if type(value) is not str:
             raise ValueError('Invalid argument: value must be a string')
 
@@ -52,8 +52,14 @@ class MatrixBuffer:
 
     #
     #
-    def fill_line(self, character: str, y: int, startx: int, endx: int):
-        for x in range(startx, endx + 1):
+    def fill_hori_line(self, character: str, y: int, x_start: int, x_end: int):
+        for x in range(x_start, x_end + 1):
+            self.__a[y][x] = character
+
+    #
+    #
+    def fill_vert_line(self, character: str, x: int, y_start: int, y_end: int):
+        for y in range(y_start, y_end + 1):
             self.__a[y][x] = character
 
     #

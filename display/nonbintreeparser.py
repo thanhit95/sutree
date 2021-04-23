@@ -38,6 +38,9 @@ class NonBinTreeParser:
 
                 self.space_branch_neighbor = argval
 
+            else:
+                raise ValueError('Invalid argument:', arg)
+
     #
     #
     def build_tree(self, input_root) -> ParsingNode:
@@ -82,14 +85,14 @@ class NonBinTreeParser:
         margin_vert_dash_below = self.get_margin_vert_dash_below(children, margin_prefix_children)
 
         # STEP 4
-        hori_line_xstart, hori_line_xstop = None, None
+        hori_line_xstart, hori_line_xend = None, None
 
         if num_children == 1:
             hori_line_xstart = children[0].margin_key_center + margin_prefix_children[0]
-            hori_line_xstop = hori_line_xstart
+            hori_line_xend = hori_line_xstart
         elif num_children > 1:
             hori_line_xstart = children[0].margin_key_center + 1
-            hori_line_xstop = children[-1].margin_key_center - 1 + margin_prefix_children[-1]
+            hori_line_xend = children[-1].margin_key_center - 1 + margin_prefix_children[-1]
 
         # STEP 5. margin of current node
         margin_key, margin_key_center = 0, 0
@@ -97,7 +100,7 @@ class NonBinTreeParser:
         if is_leaf:
             margin_key_center = max(0, len(node.key) - 1) // 2
         else:
-            margin_key_center = (hori_line_xstart + hori_line_xstop) // 2
+            margin_key_center = (hori_line_xstart + hori_line_xend) // 2
             margin_key = margin_key_center - max(0, len(node.key) - 1) // 2
 
         # STEP 6. width of current node
@@ -113,7 +116,7 @@ class NonBinTreeParser:
         if not is_leaf:
             node.width_chbrsp = width_chbrsp  # width of children + branch spacing
             node.hori_line_xstart = hori_line_xstart
-            node.hori_line_xstop = hori_line_xstop
+            node.hori_line_xend = hori_line_xend
             node.margin_vert_dash_below = margin_vert_dash_below
             node.margin_prefix_children = margin_prefix_children
 
@@ -160,7 +163,7 @@ class NonBinTreeParser:
 
         for i in range(len(node.children)):
             child = node.children[i]
-            child_shift_factor = node.margin_prefix_children[i] + shift_factor
+            child_shift_factor = node.margin_prefix_children[i]
             self.convert_margin_local_to_global(child, child_shift_factor)
 
     #
@@ -171,7 +174,7 @@ class NonBinTreeParser:
 
         if not node.is_leaf:
             node.hori_line_xstart += shift_factor
-            node.hori_line_xstop += shift_factor
+            node.hori_line_xend += shift_factor
             node.margin_vert_dash_below = [value + shift_factor for value in node.margin_vert_dash_below]
             node.margin_prefix_children = [value + shift_factor for value in node.margin_prefix_children]
 
@@ -193,7 +196,7 @@ class NonBinTreeParser:
         if not node.is_leaf:
             del node.width_chbrsp
             del node.hori_line_xstart
-            del node.hori_line_xstop
+            del node.hori_line_xend
             del node.margin_vert_dash_below
             del node.margin_prefix_children
 
@@ -213,7 +216,5 @@ class NonBinTreeParser:
             max_height = max(max_height, child_height)
 
         del children
-        del child
-        del child_height
 
         return 1 + max_height

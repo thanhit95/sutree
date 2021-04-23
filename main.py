@@ -1,3 +1,3 @@
-import test.testparser as tester
+import test.testdisplay02 as tester
 
 tester.do_task()

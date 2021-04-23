@@ -12,10 +12,18 @@ License:        3-Clause BSD License
 '''
 
 
+from enum import Enum
 from .valueutil import ValueUtil
 from .matrixbuffer import MatrixBuffer
 from .parsingnode import ParsingNode
 from .nonbintreeparser import NonBinTreeParser
+
+
+#
+#
+class FillDirection(Enum):
+    LEFT = 0
+    RIGHT = 1
 
 
 #
@@ -35,7 +43,7 @@ class NonBinTreeDisplay:
         self._vutil = ValueUtil()
         self._parser = NonBinTreeParser(self._vutil)
         self._buffer = None
-        self.config(line_char='-', margin_left=0)
+        self.config(leaf_at_bottom=False, hori_line_char='-', margin_left=0)
 
     #
     #
@@ -57,7 +65,7 @@ class NonBinTreeDisplay:
 
         res = self._buffer.get_str()
 
-        self._buffer = None
+        del self._buffer
         return res
 
     #
@@ -78,7 +86,7 @@ class NonBinTreeDisplay:
 
         res = self._buffer.get_lst_rows()
 
-        self._buffer = None
+        del self._buffer
         return res
 
     #
@@ -89,9 +97,10 @@ class NonBinTreeDisplay:
         Args:
             struct_node: Tuple(name_key, name_lst_children) indicating structure information of input node.
             space_branch_neighbor: Space between 2 branch neighbors.
-            line_char: Display character for the horizontal line connecting left-right branches.
-            margin_left: Left margin of output string result.
             float_pre: Maximum precision of floating-point numbers when displays.
+            leaf_at_bottom: True if leaf will be drawn at bottom. Otherwise, False.
+            hori_line_char: Display character for the horizontal line connecting branches.
+            margin_left: Left margin of output string result.
         '''
         for arg, argval in kwargs.items():
             if arg == 'struct_node':
@@ -100,11 +109,20 @@ class NonBinTreeDisplay:
             elif arg == 'space_branch_neighbor':
                 self._parser.config(space_branch_neighbor=argval)
 
-            elif arg == 'line_char':
-                if type(argval) is not str or len(argval) != 1:
-                    raise ValueError('Invalid argument: line_char must be a string of length 1')
+            elif arg == 'float_pre':
+                self._vutil.set_float_precision(argval)
 
-                self._line_char = argval
+            elif arg == 'leaf_at_bottom':
+                if type(argval) is not bool:
+                    raise ValueError('Invalid argument: leaf_at_bottom must be a boolean')
+
+                self._leaf_at_bottom = argval
+
+            elif arg == 'hori_line_char':
+                if type(argval) is not str or len(argval) != 1:
+                    raise ValueError('Invalid argument: hori_line_char must be a string of length 1')
+
+                self._hori_line_char = argval
 
             elif arg == 'margin_left':
                 if type(argval) is not int or argval < 0:
@@ -112,8 +130,8 @@ class NonBinTreeDisplay:
 
                 self._margin_left = argval
 
-            elif arg == 'float_pre':
-                self._vutil.set_float_precision(argval)
+            else:
+                raise ValueError('Invalid argument:', arg)
 
     #
     #
@@ -127,47 +145,54 @@ class NonBinTreeDisplay:
         Backend function for "get" method.
         '''
         height_inp_root = self._parser.get_height(inp_root)
-        height = height_inp_root * 3 - 2
+        height_buffer = height_inp_root * 4 - 3
 
         parsing_tree = self._parser.build_tree(inp_root)
+        self._parser.convert_margin_local_to_global(parsing_tree, self._margin_left)
 
-        self._buffer = MatrixBuffer(parsing_tree.width + self._margin_left, height)
-
-        self._fill_buffer(parsing_tree, 1, self._margin_left)
+        self._buffer = MatrixBuffer(parsing_tree.width, height_buffer)
+        self._fill_buffer(parsing_tree, 1)
 
         self._parser.destroy_tree(parsing_tree)
 
     #
     #
-    def _fill_buffer(self, node: ParsingNode, depth: int, margin_global: int):
+    def _fill_buffer(self, node: ParsingNode, depth: int):
         if node is None:
             return
 
-        margin_key = margin_global + node.margin_key
-        margin_left = margin_global + node.margin_left_child
-        margin_right = margin_global + node.margin_right_child
-        margin_global_right = margin_key + 1 + node.size_right_line
+        if node.is_leaf:
+            self._fill_buffer_node_leaf(node, depth)
+            return
 
-        self._buffer.fill(margin_key, depth * 3 - 3, node.key)
+        num_children = len(node.children)
 
-        if node.left is not None or node.right is not None:
-            self._buffer.fill(margin_key, depth * 3 - 2, '|')
+        self._buffer.fill_str(node.margin_key, depth * 4 - 4, node.key)
+        self._buffer.fill_str(node.margin_key_center, depth * 4 - 3, '|')
 
-        if node.left is not None:
-            self._fill_line('left', node.left.key, depth * 3 - 1, margin_left, margin_key)
-            self._fill_buffer(node.left, depth + 1, margin_global)
+        hori_line_char = self._hori_line_char if num_children > 1 else '|'
+        self._buffer.fill_hori_line(hori_line_char, depth * 4 - 2, node.hori_line_xstart, node.hori_line_xend)
 
-        if node.right is not None:
-            self._fill_line('right', node.right.key, depth * 3 - 1, margin_key, margin_right)
-            self._fill_buffer(node.right, depth + 1, margin_global_right)
+        vert_dash_below_char = '|'
+
+        for i in range(num_children):
+            vert_dash_below_char = '|'
+
+            if i == 0 and num_children >= 2:
+                vert_dash_below_char = '/'
+            elif i == num_children - 1 and num_children >= 2:
+                vert_dash_below_char = '\\'
+
+            self._buffer.fill_str(node.margin_vert_dash_below[i], depth * 4 - 1, vert_dash_below_char)
+            self._fill_buffer(node.children[i], depth + 1)
 
     #
     #
-    def _fill_line(self, direction: str, child_key: str, y: int, margin_a: int, margin_b: int):
-        if direction not in ('left', 'right'):
-            raise ValueError('Invalid argument: direction')
+    def _fill_buffer_node_leaf(self, node: ParsingNode, depth: int):
+        y_end = y_start = depth * 4 - 4
 
-        if direction == 'left':
-            margin_a += len(child_key) - 1
+        if self._leaf_at_bottom:
+            y_end = self._buffer.height() - 1
+            self._buffer.fill_vert_line('|', node.margin_key_center, y_start, y_end - 1)
 
-        self._buffer.fill_line(self._line_char, y, margin_a, margin_b)
+        self._buffer.fill_str(node.margin_key, y_end, node.key)
