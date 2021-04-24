@@ -1,4 +1,4 @@
-from display import NonBinTreeDisplay
+from pytree.display import NonBinTreeDisplay
 
 
 class Node:
