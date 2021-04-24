@@ -121,6 +121,22 @@ class NonBinTreeParser:
             node.margin_prefix_children = margin_prefix_children
 
         self.adjust_too_long_key(node)
+
+        del input_key
+        del input_children
+        del children
+        del num_children
+        del is_leaf
+        del width_children
+        del margin_prefix_children
+        del margin_vert_dash_below
+        del hori_line_xstart
+        del hori_line_xend
+        del margin_key
+        del margin_key_center
+        del width_chbrsp
+        del full_width
+
         return node
 
     #

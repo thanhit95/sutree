@@ -43,17 +43,17 @@ class NonBinTreeDisplay:
         self._vutil = ValueUtil()
         self._parser = NonBinTreeParser(self._vutil)
         self._buffer = None
-        self.config(leaf_at_bottom=False, hori_line_char='-', margin_left=0)
+        self.config(leaf_at_bottom=False, single_leaf_compact=True, hori_line_char='-', margin_left=0)
 
     #
     #
     def get(self, inp_root) -> str:
         '''
-        Gets display string for binary search tree.
-        Output result can be configured by calling "config" method. Configurable properties are:
-            struct_node, line_char, line_brsp, margin_left, float_pre
+        Gets display string for binary search tree. Output result can be configured by calling "config" method.
+
         Args:
             inp_root: Input root of binary search tree.
+
         Returns:
             String result. If inp_root is None then returns an empty string.
         '''
@@ -72,9 +72,8 @@ class NonBinTreeDisplay:
     #
     def get_lst_rows(self, inp_root) -> list:
         '''
-        Gets display string for binary search tree.
-        Output result can be configured by calling "config" method. Configurable properties are:
-            struct_node, line_char, line_brsp, margin_left, float_pre
+        Gets display string for binary search tree. Output result can be configured by calling "config" method.
+
         Returns:
             List of rows. Each row is a string. If inp_root is None then returns an empty list.
         '''
@@ -94,12 +93,20 @@ class NonBinTreeDisplay:
     def config(self, **kwargs):
         '''
         Configures settings.
+
         Args:
             struct_node: Tuple(name_key, name_lst_children) indicating structure information of input node.
+
             space_branch_neighbor: Space between 2 branch neighbors.
+
             float_pre: Maximum precision of floating-point numbers when displays.
+
             leaf_at_bottom: True if leaf will be drawn at bottom. Otherwise, False.
+
+            single_leaf_compact: True, if node has only a single child then this child will be compact. Otherwise, False. This property is disabled when leaf_at_bottom is True.
+
             hori_line_char: Display character for the horizontal line connecting branches.
+
             margin_left: Left margin of output string result.
         '''
         for arg, argval in kwargs.items():
@@ -117,6 +124,12 @@ class NonBinTreeDisplay:
                     raise ValueError('Invalid argument: leaf_at_bottom must be a boolean')
 
                 self._leaf_at_bottom = argval
+
+            elif arg == 'single_leaf_compact':
+                if type(argval) is not bool:
+                    raise ValueError('Invalid argument: single_leaf_compact must be a boolean')
+
+                self._single_leaf_compact = argval
 
             elif arg == 'hori_line_char':
                 if type(argval) is not str or len(argval) != 1:
@@ -151,27 +164,31 @@ class NonBinTreeDisplay:
         self._parser.convert_margin_local_to_global(parsing_tree, self._margin_left)
 
         self._buffer = MatrixBuffer(parsing_tree.width, height_buffer)
-        self._fill_buffer(parsing_tree, 1)
+        self._fill_buffer(parsing_tree, 0)
 
         self._parser.destroy_tree(parsing_tree)
 
     #
     #
-    def _fill_buffer(self, node: ParsingNode, depth: int):
+    def _fill_buffer(self, node: ParsingNode, y_depth: int):
         if node is None:
             return
 
         if node.is_leaf:
-            self._fill_buffer_node_leaf(node, depth)
+            self._fill_buffer_node_leaf(node, y_depth)
             return
 
         num_children = len(node.children)
 
-        self._buffer.fill_str(node.margin_key, depth * 4 - 4, node.key)
-        self._buffer.fill_str(node.margin_key_center, depth * 4 - 3, '|')
+        self._buffer.fill_str(node.margin_key, y_depth, node.key)
+        self._buffer.fill_str(node.margin_key_center, y_depth + 1, '|')
+
+        if num_children == 1 and not self._leaf_at_bottom and self._single_leaf_compact:
+            self._buffer.fill_str(node.children[0].margin_key, y_depth + 2, node.children[0].key)
+            return
 
         hori_line_char = self._hori_line_char if num_children > 1 else '|'
-        self._buffer.fill_hori_line(hori_line_char, depth * 4 - 2, node.hori_line_xstart, node.hori_line_xend)
+        self._buffer.fill_hori_line(hori_line_char, y_depth + 2, node.hori_line_xstart, node.hori_line_xend)
 
         vert_dash_below_char = '|'
 
@@ -183,16 +200,16 @@ class NonBinTreeDisplay:
             elif i == num_children - 1 and num_children >= 2:
                 vert_dash_below_char = '\\'
 
-            self._buffer.fill_str(node.margin_vert_dash_below[i], depth * 4 - 1, vert_dash_below_char)
-            self._fill_buffer(node.children[i], depth + 1)
+            self._buffer.fill_str(node.margin_vert_dash_below[i], y_depth + 3, vert_dash_below_char)
+            self._fill_buffer(node.children[i], y_depth + 4)
 
     #
     #
-    def _fill_buffer_node_leaf(self, node: ParsingNode, depth: int):
-        y_end = y_start = depth * 4 - 4
+    def _fill_buffer_node_leaf(self, node: ParsingNode, y_depth: int):
+        y_depth_end = y_depth
 
         if self._leaf_at_bottom:
-            y_end = self._buffer.height() - 1
-            self._buffer.fill_vert_line('|', node.margin_key_center, y_start, y_end - 1)
+            y_depth_end = self._buffer.height() - 1
+            self._buffer.fill_vert_line('|', node.margin_key_center, y_depth, y_depth_end - 1)
 
-        self._buffer.fill_str(node.margin_key, y_end, node.key)
+        self._buffer.fill_str(node.margin_key, y_depth_end, node.key)
