@@ -9,7 +9,7 @@ from .filldirection import FillDirection
 #
 class NonBinTreeDisplay:
     '''
-    Non-binary tree display. A utility help visualize non-binary trees by using ASCII text.
+    A utility help visualize non-binary trees by using ASCII text.
     '''
     #
     #
@@ -85,7 +85,7 @@ class NonBinTreeDisplay:
 
             leaf_at_bottom: True if leaf will be drawn at bottom. Otherwise, False.
 
-            single_leaf_compact: True, if node has only a single child then this child will be compact. Otherwise, False. This property is disabled when leaf_at_bottom is True.
+            single_leaf_compact: True, if node has only a single child then this child will be compact. Otherwise, False. This setting is disabled when leaf_at_bottom is True.
 
             hori_line_char: Display character for the horizontal line connecting branches.
 

@@ -19,8 +19,10 @@ class NonBinTreeParser:
     def config(self, **kwargs):
         '''
         Configures settings.
+
         Args:
             struct_node: Tuple(name_key, name_lst_children) indicating structure information of input node.
+
             space_branch_neighbor: Space between 2 branch neighbors.
         '''
         for arg, argval in kwargs.items():
@@ -47,8 +49,10 @@ class NonBinTreeParser:
         '''
         Builds parsing tree which stores parsing information of each corresponding node.
         The structure of input_root (and its nodes) should be configured by function config_struct_input_node.
+
         Args:
             input_root: Input root node.
+
         Returns:
             A node of type ParsingNode indicating parsing tree.
         '''
