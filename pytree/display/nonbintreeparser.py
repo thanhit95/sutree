@@ -95,7 +95,7 @@ class NonBinTreeParser:
             hori_line_xstart = children[0].margin_key_center + margin_prefix_children[0]
             hori_line_xend = hori_line_xstart
         elif num_children > 1:
-            hori_line_xstart = children[0].margin_key_center + 1
+            hori_line_xstart = children[0].margin_key_center + 1 + margin_prefix_children[0]
             hori_line_xend = children[-1].margin_key_center - 1 + margin_prefix_children[-1]
 
         # STEP 5. margin of current node
