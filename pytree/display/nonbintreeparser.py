@@ -65,7 +65,7 @@ class NonBinTreeParser:
         node = ParsingNode(self.vutil.get_str(input_key))
         node.children = []
 
-        # STEP 1 - Process children
+        # STEP 1. Children tree processing
         for input_child in input_children:
             if input_child is None:
                 continue
@@ -74,7 +74,7 @@ class NonBinTreeParser:
 
         children = node.children  # alias
 
-        # STEP 2 - Calculate common factors
+        # STEP 2. Common factors
         num_children = len(children)
         is_leaf = (num_children == 0)
 
@@ -84,21 +84,19 @@ class NonBinTreeParser:
         if num_children >= 2 and len(children[0].key) > 0 and len(children[0].key) % 2 == 0:
             children[0].margin_key_center += 1
 
-        # STEP 3
         margin_prefix_children = self.get_margin_prefix_children(num_children, width_children)
         margin_vert_dash_below = self.get_margin_vert_dash_below(children, margin_prefix_children)
 
-        # STEP 4
+        # STEP 3. Horizontal line
         hori_line_xstart, hori_line_xend = None, None
 
         if num_children == 1:
-            hori_line_xstart = children[0].margin_key_center + margin_prefix_children[0]
-            hori_line_xend = hori_line_xstart
+            hori_line_xstart = hori_line_xend = margin_vert_dash_below[0]
         elif num_children > 1:
-            hori_line_xstart = children[0].margin_key_center + 1 + margin_prefix_children[0]
-            hori_line_xend = children[-1].margin_key_center - 1 + margin_prefix_children[-1]
+            hori_line_xstart = margin_vert_dash_below[0] + 1
+            hori_line_xend = margin_vert_dash_below[-1] - 1
 
-        # STEP 5. margin of current node
+        # STEP 4. Margin of current node
         margin_key, margin_key_center = 0, 0
 
         if is_leaf:
@@ -107,7 +105,7 @@ class NonBinTreeParser:
             margin_key_center = (hori_line_xstart + hori_line_xend) // 2
             margin_key = margin_key_center - max(0, len(node.key) - 1) // 2
 
-        # STEP 6. width of current node
+        # STEP 5. Width of current node
         width_chbrsp = margin_prefix_children[-1] + width_children[-1] if not is_leaf else 0
         full_width = width_chbrsp if not is_leaf else len(node.key)
 
