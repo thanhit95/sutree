@@ -28,7 +28,7 @@ class NonBinTreeDisplay:
     #
     def get(self, inp_root) -> str:
         '''
-        Gets ASCII display string of tree. Output result can be configured by calling "config" method.
+        Gets ASCII display string of tree. Output result can be configured by calling method "config".
 
         Args:
             inp_root: Input root of tree.
@@ -51,7 +51,7 @@ class NonBinTreeDisplay:
     #
     def get_lst_rows(self, inp_root) -> list:
         '''
-        Gets ASCII display string of tree. Output result can be configured by calling "config" method.
+        Gets ASCII display string of tree. Output result can be configured by calling method "config".
 
         Args:
             inp_root: Input root of tree.
