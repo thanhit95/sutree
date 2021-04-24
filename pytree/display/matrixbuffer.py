@@ -16,7 +16,7 @@ class MatrixBuffer:
 
         self.__a = [[' '] * width for _ in range(height)]
 
-        self.__y_bottom = 0
+        self.__y_bottom = -1
 
     #
     #

@@ -176,6 +176,8 @@ class NonBinTreeParser:
 
         self.shift_margin_except_children(node, shift_factor)
 
+        del shift_factor
+
     #
     #
     def convert_margin_local_to_global(self, node: ParsingNode, shift_factor: int):

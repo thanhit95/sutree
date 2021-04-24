@@ -28,7 +28,7 @@ class NonBinTreeDisplay:
     #
     def get(self, inp_root) -> str:
         '''
-        Gets ASCII display string of tree. Output result can be configured by calling method "config".
+        Gets ASCII display string of tree. Output result is configurable by calling method "config".
 
         Args:
             inp_root: Input root of tree.
@@ -51,7 +51,7 @@ class NonBinTreeDisplay:
     #
     def get_lst_rows(self, inp_root) -> list:
         '''
-        Gets ASCII display string of tree. Output result can be configured by calling method "config".
+        Gets ASCII display string of tree. Output result is configurable by calling method "config".
 
         Args:
             inp_root: Input root of tree.
@@ -81,7 +81,7 @@ class NonBinTreeDisplay:
 
             space_branch_neighbor: Space between 2 branch neighbors.
 
-            float_pre: Maximum precision of floating-point numbers when displays.
+            float_pre: Maximum precision of floating-point numbers.
 
             leaf_at_bottom: True if leaf will be drawn at bottom. Otherwise, False.
 
