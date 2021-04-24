@@ -16,6 +16,8 @@ class MatrixBuffer:
 
         self.__a = [[' '] * width for _ in range(height)]
 
+        self.__y_bottom = 0
+
     #
     #
     def width(self):
@@ -28,39 +30,67 @@ class MatrixBuffer:
 
     #
     #
-    def fill_str(self, posx: int, posy: int, value: str):
+    def fill_str(self, x: int, y: int, value: str):
         if type(value) is not str:
             raise ValueError('Invalid argument: value must be a string')
 
-        if posx < 0 or posx >= self.__width:
-            raise ValueError('Invalid argument: posx')
-
-        if posy < 0 or posy >= self.__height:
-            raise ValueError('Invalid argument: posy')
+        self.__check_arg_x(x, 'x')
+        self.__check_arg_y(y, 'y')
 
         a = self.__a
-        posx_start = posx
+        x_start = x
         len_value = len(value)
 
         for i in range(len_value):
-            posx = posx_start + i
+            x = x_start + i
 
-            if posx >= self.__width:
+            if x >= self.__width:
                 break
 
-            a[posy][posx] = value[i]
+            a[y][x] = value[i]
+
+        self.__update_y_bottom(y)
 
     #
     #
     def fill_hori_line(self, character: str, y: int, x_start: int, x_end: int):
+        self.__check_arg_y(y, 'y')
+        self.__check_arg_x(x_start, 'x_start')
+        self.__check_arg_x(x_end, 'x_end')
+
         for x in range(x_start, x_end + 1):
             self.__a[y][x] = character
+
+        self.__update_y_bottom(y)
 
     #
     #
     def fill_vert_line(self, character: str, x: int, y_start: int, y_end: int):
+        self.__check_arg_x(x, 'x')
+        self.__check_arg_y(y_start, 'y_start')
+        self.__check_arg_y(y_end, 'y_end')
+
         for y in range(y_start, y_end + 1):
             self.__a[y][x] = character
+
+        self.__update_y_bottom(y_end)
+
+    #
+    #
+    def __check_arg_x(self, value: int, name_arg: str):
+        if value < 0 or value >= self.__width:
+            raise ValueError('Invalid argument:', name_arg)
+
+    #
+    #
+    def __check_arg_y(self, value: int, name_arg: str):
+        if value < 0 or value >= self.__height:
+            raise ValueError('Invalid argument:', name_arg)
+
+    #
+    #
+    def __update_y_bottom(self, value: int):
+        self.__y_bottom = max(self.__y_bottom, value)
 
     #
     #
@@ -72,5 +102,9 @@ class MatrixBuffer:
     #
     #
     def get_lst_rows(self) -> list:
-        lst_rows = [''.join(row).rstrip() for row in self.__a]
+        lst_rows = [''.join(row) for row in self.__a]
+
+        # optimization: remove unnecessary ending row
+        del lst_rows[self.__y_bottom + 1:]
+
         return lst_rows

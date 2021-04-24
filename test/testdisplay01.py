@@ -29,7 +29,7 @@ def do_task():
     tree = create_tree()
     disp = NonBinTreeDisplay()
 
-    disp.config(leaf_at_bottom=True, space_branch_neighbor=2)
+    disp.config(leaf_at_bottom=True, space_branch_neighbor=1)
 
     res = disp.get(tree)
     print(res)

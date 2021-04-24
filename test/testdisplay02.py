@@ -44,7 +44,7 @@ def do_task():
     disp = NonBinTreeDisplay()
 
     disp.config(
-        leaf_at_bottom=False,
+        leaf_at_bottom=True,
         space_branch_neighbor=3
     )
 
