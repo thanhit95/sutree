@@ -1,36 +1,15 @@
-'''
-
-NON-BINARY TREE DISPLAY
-
-Description:    A utility help visualize non-binary trees by using ASCII text.
-
-Author:         Thanh Trung Nguyen
-                thanh.it1995 (at) gmail.com
-
-License:        3-Clause BSD License
-
-'''
-
-
-from enum import Enum
 from .valueutil import ValueUtil
 from .matrixbuffer import MatrixBuffer
 from .parsingnode import ParsingNode
 from .nonbintreeparser import NonBinTreeParser
-
-
-#
-#
-class FillDirection(Enum):
-    LEFT = 0
-    RIGHT = 1
+from .filldirection import FillDirection
 
 
 #
 #
 class NonBinTreeDisplay:
     '''
-    Binary tree display. A utility help visualize binary trees by using ASCII text.
+    Non-binary tree display. A utility help visualize non-binary trees by using ASCII text.
     '''
     #
     #
@@ -49,10 +28,10 @@ class NonBinTreeDisplay:
     #
     def get(self, inp_root) -> str:
         '''
-        Gets display string for binary search tree. Output result can be configured by calling "config" method.
+        Gets ASCII display string of tree. Output result can be configured by calling "config" method.
 
         Args:
-            inp_root: Input root of binary search tree.
+            inp_root: Input root of tree.
 
         Returns:
             String result. If inp_root is None then returns an empty string.
@@ -72,7 +51,10 @@ class NonBinTreeDisplay:
     #
     def get_lst_rows(self, inp_root) -> list:
         '''
-        Gets display string for binary search tree. Output result can be configured by calling "config" method.
+        Gets ASCII display string of tree. Output result can be configured by calling "config" method.
+
+        Args:
+            inp_root: Input root of tree.
 
         Returns:
             List of rows. Each row is a string. If inp_root is None then returns an empty list.
