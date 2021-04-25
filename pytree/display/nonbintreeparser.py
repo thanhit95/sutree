@@ -166,13 +166,15 @@ class NonBinTreeParser:
     #
     #
     def adjust_too_long_key(self, node: ParsingNode):
-        if node.margin_key >= 0 and node.margin_key + len(node.key) <= node.width:
+        len_key = len(node.key)
+
+        if node.margin_key >= 0 and node.margin_key + len_key <= node.width:
             return
 
         shift_factor = 0 if node.margin_key >= 0 else abs(node.margin_key)
 
-        if node.margin_key + len(node.key) > node.width:
-            node.width = shift_factor + node.margin_key + len(node.key)
+        node.width = max(node.width, node.margin_key + len_key)
+        node.width += shift_factor
 
         self.shift_margin_except_children(node, shift_factor)
 

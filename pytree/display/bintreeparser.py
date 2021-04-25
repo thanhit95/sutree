@@ -161,9 +161,10 @@ class BinTreeParser:
 
         shift_factor = 0 if node.margin_key >= 0 else abs(node.margin_key)
 
-        self.shift_margin_except_children(node, shift_factor)
+        node.width = max(node.width, node.margin_key + len_key)
+        node.width += shift_factor
 
-        node.width = max(node.width, node.margin_key + len_key) + shift_factor
+        self.shift_margin_except_children(node, shift_factor)
 
         del shift_factor
 
