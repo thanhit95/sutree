@@ -44,7 +44,7 @@ class BinTreeDisplay(AbstractTreeDisplay):
         super()._config(kwargs)
 
         if kwargs:
-            args_invalid = kwargs.keys()
+            args_invalid = list(kwargs.keys())
             raise ValueError('Invalid argument(s):', args_invalid)
 
     #

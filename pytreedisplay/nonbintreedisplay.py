@@ -56,7 +56,7 @@ class NonBinTreeDisplay(AbstractTreeDisplay):
 
         #
         if kwargs:
-            args_invalid = kwargs.keys()
+            args_invalid = list(kwargs.keys())
             raise ValueError('Invalid argument(s):', args_invalid)
 
     #
