@@ -1,3 +1,3 @@
-import test.bindisplay01 as tester
+import test.nonbindisplay02 as tester
 
 tester.do_task()
