@@ -17,7 +17,7 @@ def create_tree():
 
     a.le = b
     a.ri = c
-    c.le = d
+    c.ri = d
 
     return a
 
