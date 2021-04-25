@@ -99,8 +99,7 @@ class NonBinTreeParser:
             hori_line_xend = margin_vert_dash_below[-1] - 1
 
         # STEP 4. Margin of current node
-        tmp = max(0, len(node.key) - 1) // 2
-        margin_key_center = tmp
+        margin_key_center = tmp = max(0, len(node.key) - 1) // 2
 
         if not is_leaf:
             margin_key_center = (hori_line_xstart + hori_line_xend) // 2
