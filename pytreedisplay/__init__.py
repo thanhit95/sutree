@@ -1,5 +1,5 @@
 '''
-TREE DISPLAY
+PY TREE DISPLAY
 
 Description:    A utility help visualize trees by using ASCII text.
 

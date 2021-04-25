@@ -1,3 +1,3 @@
-import test.testbinparser01 as tester
+import test.testnonbindisplay02 as tester
 
 tester.do_task()

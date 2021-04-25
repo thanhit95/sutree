@@ -1,5 +1,5 @@
-from pytree.display.valueutil import ValueUtil
-from pytree.display.nonbintreeparser import NonBinTreeParser
+from pytreedisplay.valueutil import ValueUtil
+from pytreedisplay.nonbintreeparser import NonBinTreeParser
 
 
 class Node:
