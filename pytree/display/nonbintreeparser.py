@@ -81,7 +81,8 @@ class NonBinTreeParser:
         width_children = [child.width for child in children]
 
         # magic adjustment ==> the most left child
-        if num_children >= 2 and len(children[0].key) > 0 and len(children[0].key) % 2 == 0:
+        tmp = len(children[0].key)
+        if num_children >= 2 and tmp > 0 and tmp % 2 == 0:
             children[0].margin_key_center += 1
 
         margin_prefix_children = self.get_margin_prefix_children(num_children, width_children)
@@ -138,6 +139,7 @@ class NonBinTreeParser:
         del margin_key_center
         del width_chbrsp
         del full_width
+        del tmp
 
         return node
 
