@@ -1,5 +1,5 @@
-from display.valueutil import ValueUtil
-from display.nonbintreeparser import NonBinTreeParser
+from pytree.display.valueutil import ValueUtil
+from pytree.display.nonbintreeparser import NonBinTreeParser
 
 
 class Node:
@@ -31,6 +31,7 @@ def do_task():
     parser = NonBinTreeParser(vutil)
     tree = create_tree()
 
-    partree = parser.build_tree(tree)
-    parser.convert_margin_local_to_global(partree, 0)
-    print(partree)
+    parsing_tree = parser.build_tree(tree)
+    parser.convert_margin_local_to_global(parsing_tree, 0)
+
+    print(parsing_tree)
