@@ -1,8 +1,8 @@
-# PYTHON TREE
+# PYTHON TREE DISPLAY
 
 ## DESCRIPTION
 
-Everything about tree implementation in Python.
+A utility help visualize trees by using ASCII text.
 
 &nbsp;
 
@@ -18,6 +18,8 @@ Thanh Trung Nguyen
 ## FEATURES
 
 Update later.
+
+&nbsp;
 
 ## LICENSE
 
