@@ -11,8 +11,10 @@ License:        3-Clause BSD License
 '''
 
 
+from .bintreedisplay import BinTreeDisplay
 from .nonbintreedisplay import NonBinTreeDisplay
 
 __all__ = [
-    'NonBinTreeDisplay'
+    'NonBinTreeDisplay',
+    'BinTreeDisplay'
 ]
