@@ -81,9 +81,10 @@ class NonBinTreeParser:
         width_children = [child.width for child in children]
 
         # magic adjustment ==> the most left child
-        tmp = len(children[0].key)
-        if num_children >= 2 and tmp > 0 and tmp % 2 == 0:
-            children[0].margin_key_center += 1
+        if num_children >= 2:
+            tmp = len(children[0].key)
+            if tmp > 0 and tmp % 2 == 0:
+                children[0].margin_key_center += 1
 
         margin_prefix_children = self.get_margin_prefix_children(num_children, width_children)
         margin_vert_dash_below = self.get_margin_vert_dash_below(children, margin_prefix_children)
@@ -98,13 +99,13 @@ class NonBinTreeParser:
             hori_line_xend = margin_vert_dash_below[-1] - 1
 
         # STEP 4. Margin of current node
-        margin_key, margin_key_center = 0, 0
+        tmp = max(0, len(node.key) - 1) // 2
+        margin_key_center = tmp
 
-        if is_leaf:
-            margin_key_center = max(0, len(node.key) - 1) // 2
-        else:
+        if not is_leaf:
             margin_key_center = (hori_line_xstart + hori_line_xend) // 2
-            margin_key = margin_key_center - max(0, len(node.key) - 1) // 2
+
+        margin_key = margin_key_center - tmp
 
         # STEP 5. Width of current node
         width_chbrsp = margin_prefix_children[-1] + width_children[-1] if not is_leaf else 0
