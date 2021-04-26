@@ -80,15 +80,18 @@ class BinTreeParser:
 
         margin_child_ri = width_child_le + self.space_branch_neighbor
 
-        margin_vert_dash_below_le = node.le.margin_key_center if has_child_le else -1
+        margin_vert_dash_below_le = node.le.margin_key_center if has_child_le else 0
         margin_vert_dash_below_ri = margin_child_ri + (node.ri.margin_key_center if has_child_ri else 0)
 
         # STEP 3. Horizontal line
         hori_line_xstart, hori_line_xend = None, None
 
         if not is_leaf:
-            hori_line_xstart = margin_vert_dash_below_le + 1
-            hori_line_xend = margin_vert_dash_below_ri - 1
+            hori_line_xstart = margin_vert_dash_below_le
+            hori_line_xend = margin_vert_dash_below_ri
+
+            if has_child_le and not has_child_ri:
+                hori_line_xend -= 1
 
         # STEP 4. Margin of current node
         margin_key_center = tmp = max(0, len(node.key) - 1) // 2

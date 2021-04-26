@@ -95,8 +95,8 @@ class NonBinTreeParser:
         if num_children == 1:
             hori_line_xstart = hori_line_xend = margin_vert_dash_below[0]
         elif num_children > 1:
-            hori_line_xstart = margin_vert_dash_below[0] + 1
-            hori_line_xend = margin_vert_dash_below[-1] - 1
+            hori_line_xstart = margin_vert_dash_below[0]
+            hori_line_xend = margin_vert_dash_below[-1]
 
         # STEP 4. Margin of current node
         margin_key_center = tmp = max(0, len(node.key) - 1) // 2
