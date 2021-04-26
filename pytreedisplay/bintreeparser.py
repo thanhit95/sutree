@@ -78,12 +78,6 @@ class BinTreeParser:
         width_child_le = node.le.width if has_child_le else 0
         width_child_ri = node.ri.width if has_child_ri else 0
 
-        # magic adjustment ==> the most left child
-        if has_child_le:
-            tmp = len(node.le.key)
-            if tmp > 0 and tmp % 2 == 0:
-                node.le.margin_key_center += 1
-
         margin_child_ri = width_child_le + self.space_branch_neighbor
 
         margin_vert_dash_below_le = node.le.margin_key_center if has_child_le else -1
