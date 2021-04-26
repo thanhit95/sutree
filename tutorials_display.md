@@ -5,7 +5,7 @@
 ### TUTORIAL 1. Display a binary tree using BinSearchTree
 
 ```sutree``` library support ```BinSearchTree```, which make it easier to build a binary search tree.
-Of course, you can combine ```BinTreeDisplay``` with ```BinarySearchTree```.
+Of course, you can combine ```BinTreeDisplay``` with ```BinSearchTree```.
 
 ```python 3
 from sutree import BinTreeDisplay, BinSearchTree
