@@ -17,14 +17,6 @@ Thanh Trung Nguyen
 
 &nbsp;
 
-## LICENSE
-
-Copyright (c) Thanh Trung Nguyen.
-
-This project is licensed under the [3-Clause BSD License](LICENSE.txt).
-
-&nbsp;
-
 ## INSTALLATION
 
 ```shell
@@ -323,3 +315,11 @@ Result:
            |         |         |   |   |   |   |
           def  sum_2_integers  (  foo  ,  bar  )
 ```
+
+&nbsp;
+
+## LICENSE
+
+Copyright (c) Thanh Trung Nguyen.
+
+This project is licensed under the [3-Clause BSD License](LICENSE.txt).
