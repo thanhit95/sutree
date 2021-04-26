@@ -19,9 +19,17 @@ Thanh Trung Nguyen
 
 ## LICENSE
 
-Copyright (c) Thanh Trung NGUYEN.
+Copyright (c) Thanh Trung Nguyen.
 
 This project is licensed under the [3-Clause BSD License](LICENSE.txt).
+
+&nbsp;
+
+## INSTALLATION
+
+```shell
+pip install pytreedisplay
+```
 
 &nbsp;
 
@@ -70,14 +78,6 @@ def    func_name     (    arg_list   )
                         arg  ,  arg
                          |       |
                         foo     bar
-```
-
-&nbsp;
-
-## INSTALLATION
-
-```shell
-pip install pytreedisplay
 ```
 
 &nbsp;
