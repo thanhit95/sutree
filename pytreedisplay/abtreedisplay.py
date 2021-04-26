@@ -147,7 +147,7 @@ class AbstractTreeDisplay(ABC):
         parsing_tree = self._parser.build_tree(inp_root)
         self._parser.convert_margin_local_to_global(parsing_tree, self._margin_left)
 
-        self._buffer = MatrixBuffer(parsing_tree.width, height_buffer)
+        self._buffer = MatrixBuffer(parsing_tree.width + self._margin_left, height_buffer)
         self._fill_buffer(parsing_tree, 0)
 
         self._parser.destroy_tree(parsing_tree)
