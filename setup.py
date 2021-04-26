@@ -10,7 +10,7 @@ setup_args = dict(
     long_description_content_type="text/markdown",
     long_description=README + '\n',
     license='3-Clause BSD License',
-    packages=find_packages(),
+    packages=find_packages(exclude=['*test.*', '*test']),
     author='Thanh Trung Nguyen',
     author_email='thanh.it1995@gmail.com',
     keywords=['tree', 'display', 'view', 'print', 'visualize', 'visualization', 'ascii', 'terminal', 'binary'],
