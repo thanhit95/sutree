@@ -122,7 +122,7 @@ Result:
 The more space, the more width of the tree.
 
 ```python 3
-disp.config(space_branch_neighbor=4)
+disp.config(space_branch_neighbor=5)
 ```
 
 Result:
