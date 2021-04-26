@@ -68,11 +68,11 @@ class BinTreeDisplay(AbstractTreeDisplay):
         self._buffer.fill_hori_line(self._hori_line_char, y_depth + 2, node.hori_line_xstart, node.hori_line_xend)
 
         if node.le is not None:
-            self._buffer.fill_str(node.margin_vert_dash_below_le, y_depth + 3, '/')
+            self._buffer.fill_str(node.margin_vert_dash_below_le, y_depth + 3, '|')
             self._fill_buffer(node.le, y_depth + 4)
 
         if node.ri is not None:
-            self._buffer.fill_str(node.margin_vert_dash_below_ri, y_depth + 3, '\\')
+            self._buffer.fill_str(node.margin_vert_dash_below_ri, y_depth + 3, '|')
             self._fill_buffer(node.ri, y_depth + 4)
 
     #
