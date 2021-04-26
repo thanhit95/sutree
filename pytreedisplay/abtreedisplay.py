@@ -23,7 +23,7 @@ class AbstractTreeDisplay(ABC):
         self._buffer = None
 
         self._config(dict(
-            leaf_at_bottom=False, hori_line_char='-', margin_left=0
+            leaf_at_bottom=False, compact_vert_line=False, margin_left=0, hori_line_char='-'
         ))
 
     #
@@ -82,7 +82,8 @@ class AbstractTreeDisplay(ABC):
     def _config(self, kwargs):
         '''
         Configures settings:
-            struct_node, space_branch_neighbor, float_pre, leaf_at_bottom, hori_line_char, margin_left
+            struct_node, space_branch_neighbor, float_pre, leaf_at_bottom,
+            compact_vert_line, margin_left, hori_line_char
         '''
         #
         argval = kwargs.pop('struct_node', None)
@@ -108,12 +109,12 @@ class AbstractTreeDisplay(ABC):
             self._leaf_at_bottom = argval
 
         #
-        argval = kwargs.pop('hori_line_char', None)
+        argval = kwargs.pop('compact_vert_line', None)
         if argval is not None:
-            if type(argval) is not str or len(argval) != 1:
-                raise ValueError('Invalid argument: hori_line_char must be a string of length 1')
+            if type(argval) is not bool:
+                raise ValueError('Invalid argument: compact_vert_line must be boolean')
 
-            self._hori_line_char = argval
+            self._compact_vert_line = argval
 
         #
         argval = kwargs.pop('margin_left', None)
@@ -122,6 +123,14 @@ class AbstractTreeDisplay(ABC):
                 raise ValueError('Invalid argument: margin_left must be a non-negative integer')
 
             self._margin_left = argval
+
+        #
+        argval = kwargs.pop('hori_line_char', None)
+        if argval is not None:
+            if type(argval) is not str or len(argval) != 1:
+                raise ValueError('Invalid argument: hori_line_char must be a string of length 1')
+
+            self._hori_line_char = argval
 
     #
     #
