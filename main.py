@@ -1,3 +1,6 @@
-import test.bindisplay02 as tester
+# WARNING: THIS FILE IS ONLY USED FOR TESTING PURPOSE
 
-tester.do_task()
+# import test.tree_avl03 as tester
+
+# tester.do_task()
+import test.tmp

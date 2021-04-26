@@ -1,10 +1,8 @@
-# PY TREE DISPLAY
+# SUTREE
 
 ## DESCRIPTION
 
-A utility help visualize trees by using ASCII text.
-
-Language: Python 3.
+Tree data structure library with great display utility.
 
 &nbsp;
 
@@ -20,12 +18,38 @@ Thanh Trung Nguyen
 ## INSTALLATION
 
 ```shell
-pip install pytreedisplay
+pip install sutree
 ```
 
 &nbsp;
 
 ## FEATURES
+
+This package includes two libraries:
+
+- Tree library.
+- Tree display library.
+
+**Tree library:**
+
+- Various types of trees: Binary Tree, Binary Search Tree, AVL Tree.
+- Regular operations:
+  - Checking empty.
+  - Getting number of nodes.
+  - Getting height.
+  - Traversal:
+    - 3 options: pre-order, in-order, post-order.
+    - 2 modes: recursive traversal and non-recursive traversal.
+  - Checking existence of a key.
+  - Getting minimum key.
+  - Getting maximum key.
+  - Insertion.
+  - Removal.
+  - Constructing from a list.
+
+Note: In the future, I will update more trees.
+
+**Tree display library:**
 
 - It can config space between 2 branch neighbors.
 - It can config precision of floating-point numbers.
@@ -76,245 +100,25 @@ def     func_name      (      arg_list     )
 
 ## TUTORIALS
 
-### TUTORIAL 1. Display a binary tree
+There are two sections of tutorials:
 
-```python 3
-from pytreedisplay import BinTreeDisplay
+- Tree: Using pre-defined trees in library such as BinaryTree, AvlTree...
+  - Take a look at ```/test/tree_```.
+- Display: Display a tree.
+  - Read [tutorials_display.md](tutorials_display.md)
 
+&nbsp;
 
-class Node:
-    def __init__(self, value):
-        self.value = value
-        self.left = None
-        self.right = None
+## CODE STRUCTURE
 
+Update later.
 
-a = Node(123)
-b = Node(45)
-c = Node('hello')
-d = Node(6)
+&nbsp;
 
-a.left = b
-a.right = c
-b.right = d
+## PROJECT SPECIFICATIONS
 
-disp = BinTreeDisplay()
-
-disp.config(struct_node=('value', 'left', 'right'))
-
-print(disp.get(a))
-```
-
-Result:
-
-```text
-   123
-    |
-----------
-45     hello
-|
-----
-   6
-```
-
-### TUTORIAL 2. Configuring space between 2 branch neighbors
-
-The more space, the more width of the tree.
-
-```python 3
-disp.config(space_branch_neighbor=5)
-```
-
-Result:
-
-```text
-     123
-      |
---------------
-45         hello
-|
-------
-     6
-```
-
-### TUTORIAL 3. Configuring float precision
-
-```python 3
-from pytreedisplay import BinTreeDisplay
-
-
-class Node:
-    def __init__(self, key):
-        self.value = key
-        self.left = None
-        self.right = None
-
-
-a = Node(1.45678)
-b = Node(-29.01)
-c = Node('hello')
-
-a.left = b
-a.right = c
-
-disp = BinTreeDisplay()
-
-disp.config(
-    struct_node=('value', 'left', 'right'),
-    float_pre=3
-)
-
-print(disp.get(a))
-```
-
-Result:
-
-```text
-    1.457
-      |
-  ----------
--29.01   hello
-```
-
-### TUTORIAL 4. Display a non-binary tree
-
-```python 3
-from pytreedisplay import NonBinTreeDisplay
-
-
-class Node:
-    def __init__(self, key):
-        self.key = key
-        self.children = []
-
-
-def create_tree():
-    a = Node('Sentence')
-    b = Node('She')
-    c = Node('wrote')
-    d = Node('a book')
-
-    a.children.append(b)
-    a.children.append(c)
-    a.children.append(d)
-
-    return a
-
-
-tree = create_tree()
-disp = NonBinTreeDisplay()
-
-disp.config(
-    struct_node=('key', 'children')
-)
-
-print(disp.get(tree))
-```
-
-Result:
-
-```text
-     Sentence
-        |
- ----------------
- |      |       |
-She   wrote   a book
-```
-
-### TUTORIAL 5. Display a complex non-binary tree
-
-```python 3
-from pytreedisplay import NonBinTreeDisplay
-
-
-class Node:
-    def __init__(self, key):
-        self.key = key
-        self.children = []
-
-
-def create_tree():
-    a = Node('func_definition')
-    b = Node('def')
-    c = Node('func_name')
-    d = Node('(')
-    e = Node('arg_list')
-    f = Node(')')
-    g = Node('sum_2_integers')
-    h = Node('arg')
-    i = Node(',')
-    j = Node('arg')
-    k = Node('foo')
-    m = Node('bar')
-
-    a.children.append(b)
-    a.children.append(c)
-    a.children.append(d)
-    a.children.append(e)
-    a.children.append(f)
-
-    c.children.append(g)
-
-    e.children.append(h)
-    e.children.append(i)
-    e.children.append(j)
-
-    h.children.append(k)
-    j.children.append(m)
-
-    return a
-
-
-tree = create_tree()
-disp = NonBinTreeDisplay()
-
-disp.config(
-    struct_node=('key', 'children')
-)
-
-print(disp.get(tree))
-```
-
-Result:
-
-```text
-               func_definition
-                      |
- -------------------------------------------
- |          |          |         |         |
-def     func_name      (      arg_list     )
-            |                    |
-      sum_2_integers        -----------
-                            |    |    |
-                           arg   ,   arg
-                            |         |
-                           foo       bar
-```
-
-### TUTORIAL 6. More settings
-
-```python 3
-disp.config(
-    leaf_at_bottom=True,
-    compact_vert_line=True,
-    margin_left=10
-)
-```
-
-Result:
-
-```text
-                         func_definition
-                                |
-           -------------------------------------------
-           |      func_name      |      arg_list     |
-           |          |          |         |         |
-           |          |          |    -----------    |
-           |          |          |   arg   |   arg   |
-           |          |          |    |    |    |    |
-           |          |          |    |    |    |    |
-          def   sum_2_integers   (   foo   ,   bar   )
-```
+- Language: Python 3.8
+- Paradigms: object-oriented, procedural
 
 &nbsp;
 
