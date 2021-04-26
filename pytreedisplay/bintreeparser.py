@@ -12,7 +12,7 @@ class BinTreeParser:
             raise ValueError('value_util cannot be None')
 
         self.vutil = value_util
-        self.config(struct_node=('key', 'left', 'right'), space_branch_neighbor=1)
+        self.config(struct_node=('key', 'left', 'right'), space_branch_neighbor=2)
 
     #
     #

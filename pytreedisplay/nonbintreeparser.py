@@ -12,7 +12,7 @@ class NonBinTreeParser:
             raise ValueError('value_util cannot be None')
 
         self.vutil = value_util
-        self.config(struct_node=('key', 'children'), space_branch_neighbor=1)
+        self.config(struct_node=('key', 'children'), space_branch_neighbor=2)
 
     #
     #
