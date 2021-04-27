@@ -51,10 +51,12 @@ class AvlTree(BinSearchTree):
     #
     def _insert(self, node: AvlNode, key):
         '''
-        Inserts a key (backend function)
+        Inserts a key (backend function).
+
         Args:
             node: Current processing node.
             key: The key to insert.
+
         Returns:
             The current processing node itself.
         '''
@@ -67,9 +69,11 @@ class AvlTree(BinSearchTree):
     def _remove(self, node: AvlNode, key):
         '''
         Removes the node from the tree.
+
         Args:
             node: The current processing node.
             key: The key to search and remove.
+
         Returns:
             The current processing node itself.
         '''

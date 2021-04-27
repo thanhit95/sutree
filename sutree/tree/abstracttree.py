@@ -96,5 +96,5 @@ class AbstractTree(ABC):
 
     #
     #
-    def __str__(self) -> str:
+    def __str__(self):
         return self._get_traversal_str()

@@ -88,11 +88,13 @@ class BinSearchTree(AbstractTree):
     def traverse(self, order: str = 'in'):
         '''
         Traverses the tree entirely.
+
         Args:
             order: Type of traversal order.
                 - 'pre': pre-order
                 - 'in': in-order
                 - 'post': post-order
+
         Returns:
             A list of keys.
         '''
@@ -107,8 +109,10 @@ class BinSearchTree(AbstractTree):
     def contain(self, key):
         '''
         Checks if key exists.
+
         Args:
             key: The key to search for.
+
         Returns:
             True if key exists. Otherwise, None.
         '''
@@ -123,8 +127,10 @@ class BinSearchTree(AbstractTree):
     def insert(self, key):
         '''
         Inserts a key.
+
         Args:
             key: The key to insert.
+
         Returns:
             If insertion succeeds, return True. Otherwise, rerturn False.
         '''
@@ -149,8 +155,10 @@ class BinSearchTree(AbstractTree):
     def remove(self, key):
         '''
         Removes the node of given key.
+
         Args:
             key: The key to be removed.
+
         Returns:
             If key exists, return True. Otherwise, rerturn False.
         '''
@@ -173,8 +181,7 @@ class BinSearchTree(AbstractTree):
     def min(self):
         '''
         Searches for minimum key.
-        Args:
-            None.
+
         Returns:
             Minimum key if exists. Otherwise, None.
         '''
@@ -187,8 +194,7 @@ class BinSearchTree(AbstractTree):
     def max(self):
         '''
         Searches for maximum key.
-        Args:
-            None.
+
         Returns:
             Maximum key if exists. Otherwise, None.
         '''
@@ -222,6 +228,7 @@ class BinSearchTree(AbstractTree):
     def _dispose_root(self, node: BinNode):
         '''
         Helps garbage collection free memory used by tree.
+
         Args:
             node: Input node.
         '''
@@ -245,10 +252,12 @@ class BinSearchTree(AbstractTree):
     #
     def _insert(self, node: BinNode, key):
         '''
-        Inserts a key (backend function)
+        Inserts a key (backend function).
+
         Args:
             node: Current processing node.
             key: The key to insert.
+
         Returns:
             The current processing node itself.
         '''
@@ -268,9 +277,11 @@ class BinSearchTree(AbstractTree):
     def _remove(self, node: BinNode, key):
         '''
         Removes the node from the tree.
+
         Args:
             node: The current processing node.
             key: The key to search and remove.
+
         Returns:
             The current processing node itself.
         '''
@@ -297,6 +308,7 @@ class BinSearchTree(AbstractTree):
     def _remove_candidate(self, node: BinNode):
         '''
         Finds a candidate for replacement of current node, and then removes that candidate from the tree.
+
         Args:
             node: The starting node.
         '''
@@ -319,8 +331,10 @@ class BinSearchTree(AbstractTree):
     def _search(self, node: BinNode, key):
         '''
         Searches for a key.
+
         Args:
             key: The key to search for.
+
         Returns:
             The tuple (node, parent) indicating result node and its parent.
         '''
@@ -347,9 +361,11 @@ class BinSearchTree(AbstractTree):
     def _search_min(self, node: BinNode, parent: BinNode):
         '''
         Searches for the node with minimum key.
+
         Args:
             node: Starting node.
             parent: Parent of starting node.
+
         Returns:
             The tuple (node, parent) indicating result node and its parent.
         '''
@@ -367,9 +383,11 @@ class BinSearchTree(AbstractTree):
     def _search_max(self, node: BinNode, parent: BinNode):
         '''
         Searches for the node with maximum key.
+
         Args:
             node: Starting node.
             parent: Parent of starting node.
+
         Returns:
             The tuple (node, parent) indicating result node and its parent.
         '''
@@ -387,10 +405,9 @@ class BinSearchTree(AbstractTree):
     def _construct_from_list(self, lst: list):
         '''
         Constructs tree from a list. WARNING: The list will change its value (i.e. sorting).
+
         Args:
-            lst: The list.
-        Returns:
-            None.
+            lst: The input list.
         '''
         self._dispose_root(self._root)
         self._root = None
@@ -405,11 +422,13 @@ class BinSearchTree(AbstractTree):
     #
     def _build_tree_from_sorted_list(self, lst: list, index_start: int, index_end: int):
         '''
-        Backend function for "__construct_from_list".
+        Backend function for "_construct_from_list".
+
         Args:
             lst: The list.
             index_start: Starting index in list.
             index_end: Ending index in list (inclusive).
+
         Returns:
             Root node (followed by its branch) constructed from lst[ index_start to index_end ]
         '''

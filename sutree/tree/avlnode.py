@@ -5,7 +5,7 @@ from .binnode import BinNode
 #
 class AvlNode(BinNode):
     '''
-    Avl Node.
+    AVL Node.
 
     Args:
         key: The key stored in the node.
