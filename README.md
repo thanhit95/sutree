@@ -30,9 +30,11 @@ This package includes two libraries:
 - Tree library.
 - Tree display library.
 
+TODO feature: Implement B-Tree.
+
 **Tree library:**
 
-- Various types of trees: Binary Tree, Binary Search Tree, AVL Tree.
+- Two types of trees: Binary Search Tree, AVL Tree.
 - Regular operations:
   - Checking empty.
   - Getting number of nodes.
@@ -46,8 +48,6 @@ This package includes two libraries:
   - Insertion.
   - Removal.
   - Constructing from a list.
-
-Note: In the future, I will update more trees.
 
 **Tree display library:**
 
