@@ -132,7 +132,7 @@ class BinSearchTree(AbstractTree):
             key: The key to insert.
 
         Returns:
-            If insertion succeeds, return True. Otherwise, rerturn False.
+            If insertion succeeds, return True. Otherwise, return False.
         '''
         if key is None:
             raise ValueError('Invalid argument: key must not be None')

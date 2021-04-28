@@ -36,7 +36,7 @@ class AbstractTreeDisplay(ABC):
             inp_root: Input root of tree.
 
         Returns:
-            String result. If inp_root is None then returns an empty string.
+            String result. If inp_root is None, return an empty string.
         '''
         if inp_root is None:
             return ''
@@ -59,7 +59,7 @@ class AbstractTreeDisplay(ABC):
             inp_root: Input root of tree.
 
         Returns:
-            List of rows. Each row is a string. If inp_root is None then returns an empty list.
+            List of rows. Each row is a string. If inp_root is None, return an empty list.
         '''
         if inp_root is None:
             return []
